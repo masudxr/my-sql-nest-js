@@ -4,6 +4,8 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { User } from './typeorm/entities/User';
 import { UsersModule } from './users/users.module';
+import { AuthModule } from './auth/auth.module';
+import { Auth } from './auth/entities/auth_entity';
 
 @Module({
   imports: [
@@ -14,10 +16,11 @@ import { UsersModule } from './users/users.module';
       username: 'root',
       password: '',
       database: 'fun_db',
-      entities: [User],
+      entities: [User, Auth],
       synchronize: true,
     }),
     UsersModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

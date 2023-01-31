@@ -20,6 +20,10 @@ export class UsersController {
   getUsers() {
     return this.userService.findUsers();
   }
+  @Get(':id')
+  async findOne(@Param('id', ParseIntPipe) id: number) {
+    return this.userService.findUser(id);
+  }
 
   @Post()
   createUser(@Body() CreateUserDto: CreateUserDto) {

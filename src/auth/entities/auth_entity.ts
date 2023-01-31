@@ -1,7 +1,7 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity({ name: 'users' })
-export class User {
+@Entity({ name: 'auth' })
+export class Auth {
   @PrimaryGeneratedColumn({ type: 'bigint' })
   id: number;
 
@@ -10,10 +10,4 @@ export class User {
 
   @Column()
   password: string;
-
-  @Column()
-  createAt: Date;
-
-  @Column({ nullable: true, default: '' })
-  email: string;
 }
