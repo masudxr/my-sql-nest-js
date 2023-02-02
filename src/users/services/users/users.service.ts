@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { User } from 'src/typeorm/entities/User';
+import { User } from 'src/typeorm/entities/user';
 import { encodePassword } from 'src/uencrypt/bcrypt';
 import { CreateUserParams, UpdateUserParams } from 'src/utils/types';
 import { Repository } from 'typeorm';
@@ -48,5 +48,13 @@ export class UsersService {
 
   deleteUser(id: number) {
     return this.userRepository.delete({ id });
+  }
+
+  findUserById(id: number) {
+    return this.userRepository.findOne({
+      where: {
+        id: id,
+      },
+    });
   }
 }
