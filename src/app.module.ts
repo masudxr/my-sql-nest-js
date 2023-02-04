@@ -4,10 +4,12 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { User } from './typeorm/entities/user';
 import { UsersModule } from './users/users.module';
-import { AuthModule } from './auth/auth.module';
-import { Auth } from './auth/entities/auth_entity';
 import { PassportModule } from '@nestjs/passport';
 import { SessionEntity } from './typeorm/session';
+import { BooksModule } from './books/books.module';
+import { IslamicBooksModule } from './islamic-books/islamic-books.module';
+import { Book } from './books/typeorm/entities/books';
+import { IslamicBook } from './islamic-books/typeorm/islamic-book';
 
 @Module({
   imports: [
@@ -18,14 +20,15 @@ import { SessionEntity } from './typeorm/session';
       username: 'root',
       password: '',
       database: 'fun_db',
-      entities: [User, Auth, SessionEntity],
+      entities: [User, SessionEntity, Book, IslamicBook],
       synchronize: true,
     }),
     UsersModule,
-    AuthModule,
     PassportModule.register({
       session: true,
     }),
+    BooksModule,
+    IslamicBooksModule,
   ],
   controllers: [AppController],
   providers: [AppService],

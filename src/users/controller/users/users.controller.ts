@@ -10,7 +10,6 @@ import {
   Put,
   UseGuards,
 } from '@nestjs/common';
-import { AuthenticateGuard } from 'src/auth/utilis/LocalGuard';
 import { CreateUserDto } from 'src/users/dtos/CreateUser.dto';
 import { updateUserDto } from 'src/users/dtos/UpdateUser.dto';
 import { UsersService } from 'src/users/services/users/users.service';
@@ -18,8 +17,6 @@ import { UsersService } from 'src/users/services/users/users.service';
 @Controller('users')
 export class UsersController {
   constructor(private userService: UsersService) {}
-
-  @UseGuards(AuthenticateGuard)
   @Get()
   getUsers() {
     return this.userService.findUsers();

@@ -1,13 +1,16 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity({ name: 'auth' })
-export class Auth {
+@Entity({ name: 'books' })
+export class Book {
   @PrimaryGeneratedColumn({ type: 'bigint' })
   id: number;
 
   @Column({ unique: true })
-  username: string;
+  bookname: string;
 
   @Column()
-  password: string;
+  authorname: string;
+
+  @Column()
+  publishAt: Date;
 }
