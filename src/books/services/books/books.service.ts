@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Book } from 'src/books/typeorm/entities/books';
 import { CreateBookParams, UpdateBookParams } from 'src/typeorm/entities/types';
