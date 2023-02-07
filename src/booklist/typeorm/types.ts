@@ -1,7 +1,7 @@
 export type CreateListParams = {
-  listname: string;
+  name: string;
 };
 
 export type UpdateListParams = {
-  listname: string;
+  name: string;
 };

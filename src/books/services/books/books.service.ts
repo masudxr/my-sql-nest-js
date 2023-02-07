@@ -1,11 +1,14 @@
-import { HttpException, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { Booklist } from 'src/booklist/typeorm/list';
 import { Book } from 'src/books/typeorm/entities/books';
-import { CreateBookParams, UpdateBookParams } from 'src/typeorm/entities/types';
+import { CreateBookParams, UpdateBookParams } from 'src/books/typeorm/types';
 import { Repository } from 'typeorm';
 
 @Injectable()
 export class BooksService {
+  listRepository: Repository<Booklist>;
+
   constructor(
     @InjectRepository(Book) private bookRepository: Repository<Book>,
   ) {}
@@ -21,7 +24,7 @@ export class BooksService {
     });
   }
 
-  createBook(bookDetails: CreateBookParams) {
+  async createBook(bookDetails: CreateBookParams) {
     const newBook = this.bookRepository.create({
       ...bookDetails,
       publishAt: new Date(),

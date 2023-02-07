@@ -1,10 +1,10 @@
-export type CreateIslamicBookParams = {
+export type CreateBookParams = {
   bookname: string;
   writername: string;
   publishername: string;
 };
 
-export type UpdateIslamicBookParams = {
+export type UpdateBookParams = {
   bookname: string;
   writername: string;
   publishername: string;

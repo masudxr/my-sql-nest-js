@@ -1,4 +1,3 @@
 export class CreateListDto {
-  listname: string;
-  book: string;
+  name: string;
 }

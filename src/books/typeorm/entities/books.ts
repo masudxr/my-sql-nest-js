@@ -9,7 +9,10 @@ export class Book {
   bookname: string;
 
   @Column()
-  authorname: string;
+  writername: string;
+
+  @Column()
+  publishername: string;
 
   @Column()
   publishAt: Date;

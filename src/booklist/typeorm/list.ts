@@ -13,10 +13,7 @@ export class Booklist {
   id: number;
 
   @Column()
-  listname: string;
-
-  @Column()
-  bookname: string;
+  name: string;
 
   @OneToOne(() => Book)
   @JoinColumn()

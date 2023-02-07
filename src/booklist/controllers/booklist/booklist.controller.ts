@@ -16,7 +16,7 @@ import { updateListDto } from 'src/booklist/dtolist/update.list.dto';
 import { BooklistService } from 'src/booklist/services/booklist/booklist.service';
 import { CreateBookDto } from 'src/books/dto/createBook.dto';
 
-@Controller('user/booklist')
+@Controller('booklist')
 export class BooklistController {
   constructor(private ListService: BooklistService) {}
   // @UseGuards(AuthenticateGuard)
@@ -47,11 +47,11 @@ export class BooklistController {
     await this.ListService.deleteList(id);
   }
 
-  @Post(':id/book')
-  createBookList(
+  @Post(':id/book/:id')
+  async addBookToList(
     @Param('id', ParseIntPipe) id: number,
-    @Body() CreateBookDto: CreateBookDto,
+    @Body() CreateListDto: CreateListDto,
   ) {
-    return this.ListService.createBookList(CreateBookDto);
+    return this.ListService.createBookProfile(id, CreateListDto);
   }
 }
