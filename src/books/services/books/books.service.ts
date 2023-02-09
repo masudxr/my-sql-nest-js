@@ -22,27 +22,50 @@ export class BooksService {
       },
     });
   }
-  // marge code..connect one to one start
-  async addBookToList(id: number, listid: number) {
-    const getbook = await this.bookRepository.find({
+  // marge code..connect many to many start
+  async addBookToList(bookid1: number, listid: number) {
+    const book = await this.bookRepository.findOne({
       where: {
-        id: id,
+        id: bookid1,
       },
     });
-    console.log('Get Book', getbook);
-    console.log('listid inside addbooktolist:', listid);
+    console.log('Book', book);
+
+    console.log('listid:', listid);
     const list = await this.listRepository.findOne({
       where: {
         listid: listid,
       },
     });
-    console.log('Booklist List:', list);
-    const savedBook = await this.bookRepository.save(getbook);
-    console.log('savedBook', savedBook);
-    list.id = savedBook;
+    // console.log('Book Array:', [book]);
+    // console.log('Booklist List:', list);
+    list.books = [book];
+    console.log('list booklist', list);
     await this.listRepository.save(list);
   }
-  // marge code..connect one to one end
+  // marge code..connect many to many end
+
+  // marge code..connect one to one/many start
+  // async addBookToList(id: number, listid: number) {
+  //   const getbook = await this.bookRepository.find({
+  //     where: {
+  //       id: id,
+  //     },
+  //   });
+  //   console.log('Get Book', getbook);
+  //   console.log('listid inside addbooktolist:', listid);
+  //   const list = await this.listRepository.findOne({
+  //     where: {
+  //       listid: listid,
+  //     },
+  //   });
+  //   console.log('Booklist List:', list);
+  //   const savedBook = await this.bookRepository.save(getbook);
+  //   console.log('savedBook', savedBook);
+  //   list.id = savedBook;
+  //   await this.listRepository.save(list);
+  // }
+  // marge code..connect one to one/many end
 
   async createBook(bookDetails: CreateBookParams) {
     const newBook = this.bookRepository.create({

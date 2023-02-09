@@ -2,8 +2,10 @@ import { Book } from 'src/books/typeorm/entities/books';
 import {
   Column,
   Entity,
-  JoinColumn,
-  OneToMany,
+  ManyToMany,
+  // JoinColumn,
+  // JoinTable,
+  // OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
@@ -14,8 +16,10 @@ export class Booklist {
 
   @Column()
   name: string;
-
-  @OneToMany(() => Book, (Book) => Book.booklist, { cascade: true })
-  @JoinColumn()
-  id: Book[];
+  // booklists: Book[];
+  // @OneToMany(() => Book, (Book) => Book.id, { cascade: true })
+  // @JoinTable()
+  // id: Book[][];
+  @ManyToMany(() => Book, (book) => book.lists)
+  books: Book[];
 }

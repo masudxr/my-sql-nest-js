@@ -30,17 +30,29 @@ export class BooksController {
   createBook(@Body() CreateBookDto: CreateBookDto) {
     return this.BookService.createBook(CreateBookDto);
   }
-  // ------one to many----Start
-  @Post(':id/Relation/:listid')
+  // ------one to one/many----Start
+  // @Post(':id/Relation/:listid')
+  // async addBook(
+  //   @Param('id', ParseIntPipe) id: number,
+  //   @Param('listid', ParseIntPipe) listid: number,
+  // ) {
+  //   console.log('id:', id);
+  //   console.log('listid:', listid);
+  //   return this.BookService.addBookToList(id, listid);
+  // }
+  // ------one to one/Many----End
+
+  // ------many to many----Start
+  @Post(':bookid1/Relation/:listid')
   async addBook(
-    @Param('id', ParseIntPipe) id: number,
+    @Param('bookid1', ParseIntPipe) bookid1: number,
     @Param('listid', ParseIntPipe) listid: number,
   ) {
-    console.log('id:', id);
+    console.log('bookid1:', bookid1);
     console.log('listid:', listid);
-    return this.BookService.addBookToList(id, listid);
+    return this.BookService.addBookToList(bookid1, listid);
   }
-  // ------one to Many----End
+  // ------many to Many----End
 
   @Put(':id')
   async updateBookById(

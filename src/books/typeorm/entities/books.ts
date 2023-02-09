@@ -1,5 +1,12 @@
 import { Booklist } from 'src/booklist/typeorm/list';
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinTable,
+  ManyToMany,
+  // ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity({ name: 'books' })
 export class Book {
@@ -18,6 +25,13 @@ export class Book {
   @Column()
   publishAt: Date;
 
-  @ManyToOne(() => Booklist, (Booklist) => Booklist.id)
-  booklist: Booklist[];
+  // @ManyToOne(() => Booklist, (Booklist) => Booklist.id)
+  // booklist: Booklist[];
+
+  @ManyToMany(() => Booklist, (list) => list.books, {
+    // eager: false,
+    cascade: true,
+  })
+  @JoinTable()
+  lists: Booklist[];
 }
