@@ -7,10 +7,9 @@ import { Repository } from 'typeorm';
 
 @Injectable()
 export class BooksService {
-  listRepository: Repository<Booklist>;
-
   constructor(
     @InjectRepository(Book) private bookRepository: Repository<Book>,
+    @InjectRepository(Booklist) private listRepository: Repository<Booklist>,
   ) {}
   findBooks() {
     return this.bookRepository.find();
@@ -23,6 +22,27 @@ export class BooksService {
       },
     });
   }
+  // marge code..connect one to one start
+  async addBookToList(id: number, listid: number) {
+    const getbook = await this.bookRepository.find({
+      where: {
+        id: id,
+      },
+    });
+    console.log('Get Book', getbook);
+    console.log('listid inside addbooktolist:', listid);
+    const list = await this.listRepository.findOne({
+      where: {
+        listid: listid,
+      },
+    });
+    console.log('Booklist List:', list);
+    const savedBook = await this.bookRepository.save(getbook);
+    console.log('savedBook', savedBook);
+    list.id = savedBook;
+    await this.listRepository.save(list);
+  }
+  // marge code..connect one to one end
 
   async createBook(bookDetails: CreateBookParams) {
     const newBook = this.bookRepository.create({
@@ -31,6 +51,7 @@ export class BooksService {
     });
     return this.bookRepository.save(newBook);
   }
+
   findBookByBookname(bookname: string) {
     return this.bookRepository.findOne({
       where: {

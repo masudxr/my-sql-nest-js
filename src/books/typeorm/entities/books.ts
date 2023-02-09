@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Booklist } from 'src/booklist/typeorm/list';
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity({ name: 'books' })
 export class Book {
@@ -16,4 +17,7 @@ export class Book {
 
   @Column()
   publishAt: Date;
+
+  @ManyToOne(() => Booklist, (Booklist) => Booklist.id)
+  booklist: Booklist[];
 }

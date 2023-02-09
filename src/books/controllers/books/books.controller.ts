@@ -9,7 +9,7 @@ import {
   Post,
   Put,
 } from '@nestjs/common';
-
+import { CreateListDto } from 'src/booklist/dtolist/create.list.dto';
 import { CreateBookDto } from 'src/books/dto/createBook.dto';
 import { updateBookDto } from 'src/books/dto/updateBook.dto';
 import { BooksService } from 'src/books/services/books/books.service';
@@ -23,13 +23,24 @@ export class BooksController {
   }
   @Get(':id')
   async findOne(@Param('id', ParseIntPipe) id: number) {
-    return this.BookService.findBook(id);
+    return await this.BookService.findBook(id);
   }
 
   @Post()
   createBook(@Body() CreateBookDto: CreateBookDto) {
     return this.BookService.createBook(CreateBookDto);
   }
+  // ------one to many----Start
+  @Post(':id/Relation/:listid')
+  async addBook(
+    @Param('id', ParseIntPipe) id: number,
+    @Param('listid', ParseIntPipe) listid: number,
+  ) {
+    console.log('id:', id);
+    console.log('listid:', listid);
+    return this.BookService.addBookToList(id, listid);
+  }
+  // ------one to Many----End
 
   @Put(':id')
   async updateBookById(

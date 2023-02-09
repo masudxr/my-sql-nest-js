@@ -46,12 +46,4 @@ export class BooklistController {
   async deleteListById(@Param('id', ParseIntPipe) id: number) {
     await this.ListService.deleteList(id);
   }
-
-  @Post(':id/book/:id')
-  async addBookToList(
-    @Param('id', ParseIntPipe) id: number,
-    @Body() CreateListDto: CreateListDto,
-  ) {
-    return this.ListService.createBookProfile(id, CreateListDto);
-  }
 }

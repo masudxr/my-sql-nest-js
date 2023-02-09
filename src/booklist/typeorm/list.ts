@@ -3,19 +3,19 @@ import {
   Column,
   Entity,
   JoinColumn,
-  OneToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
 @Entity({ name: 'booklists' })
 export class Booklist {
   @PrimaryGeneratedColumn({ type: 'bigint' })
-  id: number;
+  listid: number;
 
   @Column()
   name: string;
 
-  @OneToOne(() => Book)
+  @OneToMany(() => Book, (Book) => Book.booklist, { cascade: true })
   @JoinColumn()
-  book: Book;
+  id: Book[];
 }
