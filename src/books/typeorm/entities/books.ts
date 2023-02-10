@@ -4,6 +4,7 @@ import {
   Entity,
   JoinTable,
   ManyToMany,
+  ManyToOne,
   // ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
@@ -14,24 +15,26 @@ export class Book {
   id: number;
 
   @Column({ unique: true })
-  bookname: string;
+  name: string;
 
   @Column()
-  writername: string;
+  writer: string;
 
   @Column()
-  publishername: string;
+  publisher: string;
 
   @Column()
   publishAt: Date;
+  // one to one relation with booklist Start
+  @ManyToOne(() => Booklist, (Booklist) => Booklist.book)
+  list: Booklist[];
+  // one to one relation with booklist End
 
-  // @ManyToOne(() => Booklist, (Booklist) => Booklist.id)
-  // booklist: Booklist[];
-
+  // manny to many relation with booklist Start
   @ManyToMany(() => Booklist, (list) => list.books, {
-    // eager: false,
     cascade: true,
   })
   @JoinTable()
   lists: Booklist[];
+  // manny to many relation with booklist End
 }

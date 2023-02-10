@@ -10,7 +10,7 @@ import {
   Put,
   UseGuards,
 } from '@nestjs/common';
-import { AuthenticateGuard } from 'src/auth/utilis/LocalGuard';
+// import { AuthenticateGuard } from 'src/auth/utilis/LocalGuard';
 import { CreateUserDto } from 'src/users/dtos/CreateUser.dto';
 import { updateUserDto } from 'src/users/dtos/UpdateUser.dto';
 import { UsersService } from 'src/users/services/users/users.service';
@@ -18,7 +18,7 @@ import { UsersService } from 'src/users/services/users/users.service';
 @Controller('users')
 export class UsersController {
   constructor(private userService: UsersService) {}
-  @UseGuards(AuthenticateGuard)
+  // @UseGuards(AuthenticateGuard)
   @Get()
   getUsers() {
     return this.userService.findUsers();
@@ -32,6 +32,16 @@ export class UsersController {
   createUser(@Body() CreateUserDto: CreateUserDto) {
     return this.userService.createUser(CreateUserDto);
   }
+  @Post(':uid/user2list/:lid')
+  async addListForUser(
+    @Param('uid', ParseIntPipe) uid: number,
+    @Param('lid', ParseIntPipe) lid: number,
+  ) {
+    console.log('id:', uid);
+    console.log('listid:', lid);
+    return this.userService.addListForUser(uid, lid);
+  }
+  // ------many to Many----End
 
   @Put(':id')
   async updateUserById(

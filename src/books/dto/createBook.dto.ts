@@ -1,5 +1,5 @@
 export class CreateBookDto {
-  bookname: string;
-  writername: string;
-  publishername: string;
+  name: string;
+  writer: string;
+  publisher: string;
 }

@@ -3,7 +3,6 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Booklist } from 'src/booklist/typeorm/list';
 import { CreateListParams, UpdateListParams } from 'src/booklist/typeorm/types';
-import { Book } from 'src/books/typeorm/entities/books';
 import { Repository } from 'typeorm';
 
 @Injectable()
@@ -15,10 +14,10 @@ export class BooklistService {
     return this.listRepository.find();
   }
 
-  findList(listid: number) {
+  findList(id: number) {
     return this.listRepository.find({
       where: {
-        listid: listid,
+        id: id,
       },
     });
   }
@@ -30,18 +29,18 @@ export class BooklistService {
     return this.listRepository.save(newList);
   }
 
-  updateList(listid: number, updateListDetails: UpdateListParams) {
-    return this.listRepository.update({ listid }, { ...updateListDetails });
+  updateList(id: number, updateListDetails: UpdateListParams) {
+    return this.listRepository.update({ id }, { ...updateListDetails });
   }
 
-  deleteList(listid: number) {
-    return this.listRepository.delete({ listid });
+  deleteList(id: number) {
+    return this.listRepository.delete({ id });
   }
 
-  findListById(listid: number) {
+  findListById(id: number) {
     return this.listRepository.findOne({
       where: {
-        listid: listid,
+        id: id,
       },
     });
   }

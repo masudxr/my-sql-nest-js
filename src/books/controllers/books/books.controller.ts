@@ -31,26 +31,26 @@ export class BooksController {
     return this.BookService.createBook(CreateBookDto);
   }
   // ------one to one/many----Start
-  // @Post(':id/Relation/:listid')
-  // async addBook(
-  //   @Param('id', ParseIntPipe) id: number,
-  //   @Param('listid', ParseIntPipe) listid: number,
-  // ) {
-  //   console.log('id:', id);
-  //   console.log('listid:', listid);
-  //   return this.BookService.addBookToList(id, listid);
-  // }
+  @Post(':id/Relation/:listid')
+  async addBookOne2One(
+    @Param('id', ParseIntPipe) id: number,
+    @Param('listid', ParseIntPipe) listid: number,
+  ) {
+    console.log('id:', id);
+    console.log('listid:', listid);
+    return this.BookService.addBookOne2One(id, listid);
+  }
   // ------one to one/Many----End
 
   // ------many to many----Start
-  @Post(':bookid1/Relation/:listid')
+  @Post(':id/many2many/:listid')
   async addBook(
-    @Param('bookid1', ParseIntPipe) bookid1: number,
+    @Param('id', ParseIntPipe) id: number,
     @Param('listid', ParseIntPipe) listid: number,
   ) {
-    console.log('bookid1:', bookid1);
+    console.log('id:', id);
     console.log('listid:', listid);
-    return this.BookService.addBookToList(bookid1, listid);
+    return this.BookService.addBookToList(id, listid);
   }
   // ------many to Many----End
 

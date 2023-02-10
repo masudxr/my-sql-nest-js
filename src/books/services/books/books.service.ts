@@ -23,48 +23,46 @@ export class BooksService {
     });
   }
   // marge code..connect many to many start
-  async addBookToList(bookid1: number, listid: number) {
+  async addBookToList(bookid: number, id: number) {
     const book = await this.bookRepository.findOne({
       where: {
-        id: bookid1,
+        id: bookid,
       },
     });
     console.log('Book', book);
 
-    console.log('listid:', listid);
+    console.log('listid:', id);
     const list = await this.listRepository.findOne({
       where: {
-        listid: listid,
+        id: id,
       },
     });
-    // console.log('Book Array:', [book]);
-    // console.log('Booklist List:', list);
-    list.books = [book];
-    console.log('list booklist', list);
+    // list.books = [book];
+    console.log('list many to manybooklist', list);
+    list.books.push(book);
+    console.log('list many to manybooklist', list);
     await this.listRepository.save(list);
   }
   // marge code..connect many to many end
 
   // marge code..connect one to one/many start
-  // async addBookToList(id: number, listid: number) {
-  //   const getbook = await this.bookRepository.find({
-  //     where: {
-  //       id: id,
-  //     },
-  //   });
-  //   console.log('Get Book', getbook);
-  //   console.log('listid inside addbooktolist:', listid);
-  //   const list = await this.listRepository.findOne({
-  //     where: {
-  //       listid: listid,
-  //     },
-  //   });
-  //   console.log('Booklist List:', list);
-  //   const savedBook = await this.bookRepository.save(getbook);
-  //   console.log('savedBook', savedBook);
-  //   list.id = savedBook;
-  //   await this.listRepository.save(list);
-  // }
+  async addBookOne2One(id: number, listid: number) {
+    const book = await this.bookRepository.findOne({
+      where: {
+        id: id,
+      },
+    });
+    console.log('Get Book', book);
+    console.log('listid inside addBookOne2One:', id);
+    const list = await this.listRepository.findOne({
+      where: {
+        id: listid,
+      },
+    });
+    console.log('Booklist List:', list);
+    list.book = [book];
+    await this.listRepository.save(list);
+  }
   // marge code..connect one to one/many end
 
   async createBook(bookDetails: CreateBookParams) {
@@ -75,10 +73,10 @@ export class BooksService {
     return this.bookRepository.save(newBook);
   }
 
-  findBookByBookname(bookname: string) {
+  findBookByBookname(name: string) {
     return this.bookRepository.findOne({
       where: {
-        bookname: bookname,
+        name: name,
       },
     });
   }
