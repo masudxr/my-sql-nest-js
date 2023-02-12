@@ -8,42 +8,43 @@ import {
   ParseIntPipe,
   Post,
   Put,
-  // UseGuards,
 } from '@nestjs/common';
-// import { AuthenticateGuard } from 'src/auth/utilis/LocalGuard';
 import { CreateListDto } from 'src/booklist/dto/create.list.dto';
-import { updateListDto } from 'src/booklist/dto/update.list.dto';
+import { UpdateListDto } from 'src/booklist/dto/update.list.dto';
 import { BooklistService } from './booklist.service';
-// import { CreateBookDto } from 'src/books/dto/createBook.dto';
 
 @Controller('booklist')
 export class BooklistController {
-  constructor(private ListService: BooklistService) {}
-  // @UseGuards(AuthenticateGuard)
+  constructor(private listService: BooklistService) {}
   @Get()
-  getLists() {
-    return this.ListService.findLists();
+  findAll() {
+    return this.listService.findAll();
   }
   @Get(':id')
-  async findOne(@Param('id', ParseIntPipe) id: number) {
-    return this.ListService.findList(id);
+  async get(@Param('id', ParseIntPipe) id: number) {
+    return this.listService.get(id);
   }
 
   @Post()
-  createList(@Body() CreateListDto: CreateListDto) {
-    return this.ListService.createList(CreateListDto);
+  create(@Body() CreateListDto: CreateListDto) {
+    return this.listService.create(CreateListDto);
   }
 
   @Put(':id')
-  async updateBookById(
+  async update(
     @Param('id', ParseIntPipe) id: number,
-    @Body() updateListDto: updateListDto,
+    @Body() updateListDto: UpdateListDto,
   ) {
-    await this.ListService.updateList(id, updateListDto);
+    await this.listService.update(id, updateListDto);
   }
 
   @Delete(':id')
-  async deleteListById(@Param('id', ParseIntPipe) id: number) {
-    await this.ListService.deleteList(id);
+  async delete(@Param('id', ParseIntPipe) id: number) {
+    await this.listService.delete(id);
+  }
+
+  @Get(':id/books')
+  async findWithBooks(@Param('id', ParseIntPipe) id: number) {
+    return await this.listService.findWithBooks(id);
   }
 }

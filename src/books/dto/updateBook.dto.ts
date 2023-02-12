@@ -1,4 +1,4 @@
-export class updateBookDto {
+export class UpdateBookDto {
   name: string;
   writer: string;
   publisher: string;

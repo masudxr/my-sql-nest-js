@@ -1,3 +1,3 @@
-export class updateListDto {
+export class UpdateListDto {
   name: string;
 }

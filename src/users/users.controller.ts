@@ -12,7 +12,7 @@ import {
 } from '@nestjs/common';
 // import { AuthenticateGuard } from 'src/auth/utilis/LocalGuard';
 import { CreateUserDto } from 'src/users/dtos/CreateUser.dto';
-import { updateUserDto } from 'src/users/dtos/UpdateUser.dto';
+import { UpdateUserDto } from 'src/users/dtos/UpdateUser.dto';
 import { UsersService } from './users.service';
 
 @Controller('users')
@@ -20,20 +20,20 @@ export class UsersController {
   constructor(private userService: UsersService) {}
   // @UseGuards(AuthenticateGuard)
   @Get()
-  getUsers() {
-    return this.userService.findUsers();
+  findAll() {
+    return this.userService.findAll();
   }
   @Get(':id')
-  async findOne(@Param('id', ParseIntPipe) id: number) {
-    return this.userService.findUser(id);
+  async get(@Param('id', ParseIntPipe) id: number) {
+    return this.userService.get(id);
   }
 
   @Post()
-  createUser(@Body() CreateUserDto: CreateUserDto) {
-    return this.userService.createUser(CreateUserDto);
+  create(@Body() CreateUserDto: CreateUserDto) {
+    return this.userService.create(CreateUserDto);
   }
   @Post(':uid/user2list/:lid')
-  async addList(
+  async addListForUser(
     @Param('uid', ParseIntPipe) uid: number,
     @Param('lid', ParseIntPipe) lid: number,
   ) {
@@ -44,15 +44,15 @@ export class UsersController {
   // ------many to Many----End
 
   @Put(':id')
-  async updateUser(
+  async update(
     @Param('id', ParseIntPipe) id: number,
-    @Body() updateUserDto: updateUserDto,
+    @Body() updateUserDto: UpdateUserDto,
   ) {
-    await this.userService.updateUser(id, updateUserDto);
+    await this.userService.update(id, updateUserDto);
   }
 
   @Delete(':id')
-  async deleteUserById(@Param('id', ParseIntPipe) id: number) {
-    await this.userService.deleteUser(id);
+  async delete(@Param('id', ParseIntPipe) id: number) {
+    await this.userService.delete(id);
   }
 }

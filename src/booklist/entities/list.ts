@@ -22,7 +22,7 @@ export class Booklist {
   })
   userId: number;
 
-  @ManyToMany(() => Book)
+  @ManyToMany(() => Book, (book) => book.lists)
   books: Book[];
 
   @ManyToOne(() => User, (user) => user.lists, { nullable: false })

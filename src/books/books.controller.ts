@@ -11,66 +11,58 @@ import {
 } from '@nestjs/common';
 import { CreateListDto } from 'src/booklist/dto/create.list.dto';
 import { CreateBookDto } from 'src/books/dto/createBook.dto';
-import { updateBookDto } from 'src/books/dto/updateBook.dto';
+import { UpdateBookDto } from 'src/books/dto/updateBook.dto';
 import { BooksService } from 'src/books/books.service';
 
 @Controller('books')
 export class BooksController {
   constructor(private BookService: BooksService) {}
   @Get()
-  getBooks() {
-    return this.BookService.findBooks();
+  findAll() {
+    return this.BookService.findAll();
   }
   @Get(':id')
-  async findOne(@Param('id', ParseIntPipe) id: number) {
-    return await this.BookService.findBook(id);
+  async get(@Param('id', ParseIntPipe) id: number) {
+    return await this.BookService.get(id);
   }
 
   @Post()
-  createBook(@Body() CreateBookDto: CreateBookDto) {
-    return this.BookService.createBook(CreateBookDto);
+  create(@Body() CreateBookDto: CreateBookDto) {
+    return this.BookService.create(CreateBookDto);
   }
   // ------one to one/many----Start
-  @Post(':id/Relation/:listid')
-  async addBookOne2One(
-    @Param('id', ParseIntPipe) id: number,
-    @Param('listid', ParseIntPipe) listid: number,
-  ) {
-    console.log('id:', id);
-    console.log('listid:', listid);
-    return this.BookService.addBookOne2One(id, listid);
-  }
+  // @Post(':id/Relation/:listid')
+  // async addBookOne2One(
+  //   @Param('id', ParseIntPipe) id: number,
+  //   @Param('listid', ParseIntPipe) listid: number,
+  // ) {
+  //   console.log('id:', id);
+  //   console.log('listid:', listid);
+  //   return this.BookService.addBookOne2One(id, listid);
+  // }
   // ------one to one/Many----End
 
   // ------many to many----Start
-  @Post(':bid/many2many/:lid')
-  async addBook(
-    @Param('bid', ParseIntPipe) bid: number,
+  @Post(':id/list/:lid')
+  async addBookToList(
+    @Param('id', ParseIntPipe) id: number,
     @Param('lid', ParseIntPipe) lid: number,
   ) {
-    console.log('id:', bid);
+    console.log('id:', id);
     console.log('lid:', lid);
-    return this.BookService.addBookToList(bid, lid);
-  }
-  // ------many to Many----End
-
-  // Get list from the DB start//
-  @Get('list/:id')
-  async findList(@Param('id', ParseIntPipe) id: number) {
-    return await this.BookService.findList(id);
+    return this.BookService.addBookToList(id, lid);
   }
 
-  // get list from the DB End
   @Put(':id')
-  async updateBook(
+  async update(
     @Param('id', ParseIntPipe) id: number,
-    @Body() updateBookDto: updateBookDto,
+    @Body() updateBookDto: UpdateBookDto,
   ) {
-    await this.BookService.updateBook(id, updateBookDto);
+    await this.BookService.update(id, updateBookDto);
   }
 
   @Delete(':id')
-  async deleteBook(@Param('id', ParseIntPipe) id: number) {
-    await this.BookService.deleteBook(id);
+  async delete(@Param('id', ParseIntPipe) id: number) {
+    await this.BookService.delete(id);
   }
 }

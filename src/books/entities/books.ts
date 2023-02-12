@@ -25,7 +25,7 @@ export class Book {
   @Column()
   publishAt: Date;
 
-  @ManyToMany(() => Booklist)
+  @ManyToMany(() => Booklist, (booklist) => booklist.books)
   @JoinTable()
   lists: Booklist[];
 }

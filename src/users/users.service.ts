@@ -5,7 +5,7 @@ import { Booklist } from 'src/booklist/entities/list';
 import { encodePassword } from 'src/uencrypt/bcrypt';
 import { Repository } from 'typeorm';
 import { CreateUserDto } from './dtos/CreateUser.dto';
-import { updateUserDto } from './dtos/UpdateUser.dto';
+import { UpdateUserDto } from './dtos/UpdateUser.dto';
 import { User } from './entities/user';
 
 @Injectable()
@@ -15,11 +15,11 @@ export class UsersService {
     @InjectRepository(Booklist) private listRepository: Repository<Booklist>,
     private bookListService: BooklistService,
   ) {}
-  findUsers() {
+  findAll() {
     return this.userRepository.find();
   }
 
-  findUser(id: number) {
+  get(id: number) {
     // this.bookListService.findList();
     return this.userRepository.findOne({
       where: {
@@ -28,7 +28,7 @@ export class UsersService {
     });
   }
 
-  createUser(userDetails: CreateUserDto) {
+  create(userDetails: CreateUserDto) {
     const password = encodePassword(userDetails.password);
     console.log('New Post Password:', password);
     const newUser = this.userRepository.create({
@@ -39,19 +39,11 @@ export class UsersService {
     return this.userRepository.save(newUser);
   }
 
-  findUserByname(username: string) {
-    return this.userRepository.findOne({
-      where: {
-        username: username,
-      },
-    });
-  }
-
-  updateUser(id: number, updateUserDetails: updateUserDto) {
+  update(id: number, updateUserDetails: UpdateUserDto) {
     return this.userRepository.update({ id }, { ...updateUserDetails });
   }
 
-  deleteUser(id: number) {
+  delete(id: number) {
     return this.userRepository.delete({ id });
   }
 
