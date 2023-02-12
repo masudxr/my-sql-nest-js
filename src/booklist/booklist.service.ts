@@ -1,9 +1,9 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Booklist } from 'src/booklist/typeorm/list';
-import { CreateListParams, UpdateListParams } from 'src/booklist/typeorm/types';
+import { Booklist } from 'src/booklist/entities/list';
 import { Repository } from 'typeorm';
+import { CreateListDto } from './dto/create.list.dto';
+import { updateListDto } from './dto/update.list.dto';
 
 @Injectable()
 export class BooklistService {
@@ -22,27 +22,19 @@ export class BooklistService {
     });
   }
 
-  async createList(listDetails: CreateListParams) {
+  async createList(listDetails: CreateListDto) {
     const newList = this.listRepository.create({
       ...listDetails,
     });
     return this.listRepository.save(newList);
   }
 
-  updateList(id: number, updateListDetails: UpdateListParams) {
+  updateList(id: number, updateListDetails: updateListDto) {
     return this.listRepository.update({ id }, { ...updateListDetails });
   }
 
   deleteList(id: number) {
     return this.listRepository.delete({ id });
-  }
-
-  findListById(id: number) {
-    return this.listRepository.findOne({
-      where: {
-        id: id,
-      },
-    });
   }
 
   // async addBookToList(id: number) {

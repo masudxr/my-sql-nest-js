@@ -11,9 +11,9 @@ import {
   // UseGuards,
 } from '@nestjs/common';
 // import { AuthenticateGuard } from 'src/auth/utilis/LocalGuard';
-import { CreateListDto } from 'src/booklist/dtolist/create.list.dto';
-import { updateListDto } from 'src/booklist/dtolist/update.list.dto';
-import { BooklistService } from 'src/booklist/services/booklist/booklist.service';
+import { CreateListDto } from 'src/booklist/dto/create.list.dto';
+import { updateListDto } from 'src/booklist/dto/update.list.dto';
+import { BooklistService } from './booklist.service';
 // import { CreateBookDto } from 'src/books/dto/createBook.dto';
 
 @Controller('booklist')

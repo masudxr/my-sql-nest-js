@@ -1,9 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Booklist } from 'src/booklist/typeorm/list';
-import { Book } from 'src/books/typeorm/entities/books';
-import { CreateBookParams, UpdateBookParams } from 'src/books/typeorm/types';
+import { Booklist } from 'src/booklist/entities/list';
+import { Book } from 'src/books/entities/books';
 import { Repository } from 'typeorm';
+import { CreateBookDto } from './dto/createBook.dto';
+import { updateBookDto } from './dto/updateBook.dto';
 
 @Injectable()
 export class BooksService {
@@ -16,12 +17,21 @@ export class BooksService {
   }
 
   findBook(id: number) {
-    return this.bookRepository.find({
+    return this.bookRepository.findOne({
       where: {
         id: id,
       },
     });
   }
+  // find list and show the listed books//
+  async findList(id: number) {
+    console.log('get id:', id);
+    // const bookWithList = await AppDataSource.getRepository(Booklist)
+    // .createQueryBuilder('list')
+    // .leftJoinAndSelect('list.books', 'books')
+    // .getMany();
+  }
+
   // marge code..connect many to many start
   async addBookToList(bookid: number, id: number) {
     const book = await this.bookRepository.findOne({
@@ -37,10 +47,9 @@ export class BooksService {
         id: id,
       },
     });
-    // list.books = [book];
+    list.books = [book];
     console.log('list many to manybooklist', list);
-    list.books.push(book);
-    console.log('list many to manybooklist', list);
+    // list.books.push(book);
     await this.listRepository.save(list);
   }
   // marge code..connect many to many end
@@ -60,12 +69,12 @@ export class BooksService {
       },
     });
     console.log('Booklist List:', list);
-    list.book = [book];
+    // list.book = [book];
     await this.listRepository.save(list);
   }
   // marge code..connect one to one/many end
 
-  async createBook(bookDetails: CreateBookParams) {
+  async createBook(bookDetails: CreateBookDto) {
     const newBook = this.bookRepository.create({
       ...bookDetails,
       publishAt: new Date(),
@@ -73,26 +82,18 @@ export class BooksService {
     return this.bookRepository.save(newBook);
   }
 
-  findBookByBookname(name: string) {
+  findBookByname(name: string) {
     return this.bookRepository.findOne({
       where: {
         name: name,
       },
     });
   }
-  updateBook(id: number, updateBookDetails: UpdateBookParams) {
+  updateBook(id: number, updateBookDetails: updateBookDto) {
     return this.bookRepository.update({ id }, { ...updateBookDetails });
   }
 
   deleteBook(id: number) {
     return this.bookRepository.delete({ id });
-  }
-
-  findBookById(id: number) {
-    return this.bookRepository.findOne({
-      where: {
-        id: id,
-      },
-    });
   }
 }

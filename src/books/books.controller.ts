@@ -9,10 +9,10 @@ import {
   Post,
   Put,
 } from '@nestjs/common';
-import { CreateListDto } from 'src/booklist/dtolist/create.list.dto';
+import { CreateListDto } from 'src/booklist/dto/create.list.dto';
 import { CreateBookDto } from 'src/books/dto/createBook.dto';
 import { updateBookDto } from 'src/books/dto/updateBook.dto';
-import { BooksService } from 'src/books/services/books/books.service';
+import { BooksService } from 'src/books/books.service';
 
 @Controller('books')
 export class BooksController {
@@ -43,19 +43,26 @@ export class BooksController {
   // ------one to one/Many----End
 
   // ------many to many----Start
-  @Post(':id/many2many/:listid')
+  @Post(':bid/many2many/:lid')
   async addBook(
-    @Param('id', ParseIntPipe) id: number,
-    @Param('listid', ParseIntPipe) listid: number,
+    @Param('bid', ParseIntPipe) bid: number,
+    @Param('lid', ParseIntPipe) lid: number,
   ) {
-    console.log('id:', id);
-    console.log('listid:', listid);
-    return this.BookService.addBookToList(id, listid);
+    console.log('id:', bid);
+    console.log('lid:', lid);
+    return this.BookService.addBookToList(bid, lid);
   }
   // ------many to Many----End
 
+  // Get list from the DB start//
+  @Get('list/:id')
+  async findList(@Param('id', ParseIntPipe) id: number) {
+    return await this.BookService.findList(id);
+  }
+
+  // get list from the DB End
   @Put(':id')
-  async updateBookById(
+  async updateBook(
     @Param('id', ParseIntPipe) id: number,
     @Body() updateBookDto: updateBookDto,
   ) {
@@ -63,7 +70,7 @@ export class BooksController {
   }
 
   @Delete(':id')
-  async deleteBookById(@Param('id', ParseIntPipe) id: number) {
+  async deleteBook(@Param('id', ParseIntPipe) id: number) {
     await this.BookService.deleteBook(id);
   }
 }

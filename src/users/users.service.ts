@@ -1,32 +1,34 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Booklist } from 'src/booklist/typeorm/list';
-import { Book } from 'src/books/typeorm/entities/books';
-import { User } from 'src/typeorm/entities/user';
+import { BooklistService } from 'src/booklist/booklist.service';
+import { Booklist } from 'src/booklist/entities/list';
 import { encodePassword } from 'src/uencrypt/bcrypt';
-import { CreateUserParams, UpdateUserParams } from 'src/utils/types';
 import { Repository } from 'typeorm';
+import { CreateUserDto } from './dtos/CreateUser.dto';
+import { updateUserDto } from './dtos/UpdateUser.dto';
+import { User } from './entities/user';
 
 @Injectable()
 export class UsersService {
   constructor(
     @InjectRepository(User) private userRepository: Repository<User>,
     @InjectRepository(Booklist) private listRepository: Repository<Booklist>,
+    private bookListService: BooklistService,
   ) {}
   findUsers() {
     return this.userRepository.find();
   }
 
   findUser(id: number) {
-    return this.userRepository.find({
+    // this.bookListService.findList();
+    return this.userRepository.findOne({
       where: {
         id: id,
       },
     });
   }
 
-  createUser(userDetails: CreateUserParams) {
+  createUser(userDetails: CreateUserDto) {
     const password = encodePassword(userDetails.password);
     console.log('New Post Password:', password);
     const newUser = this.userRepository.create({
@@ -37,7 +39,7 @@ export class UsersService {
     return this.userRepository.save(newUser);
   }
 
-  findUserByUsername(username: string) {
+  findUserByname(username: string) {
     return this.userRepository.findOne({
       where: {
         username: username,
@@ -45,7 +47,7 @@ export class UsersService {
     });
   }
 
-  updateUser(id: number, updateUserDetails: UpdateUserParams) {
+  updateUser(id: number, updateUserDetails: updateUserDto) {
     return this.userRepository.update({ id }, { ...updateUserDetails });
   }
 
@@ -53,13 +55,6 @@ export class UsersService {
     return this.userRepository.delete({ id });
   }
 
-  findUserById(id: number) {
-    return this.userRepository.findOne({
-      where: {
-        id: id,
-      },
-    });
-  }
   // Relation many to many Start with list
   async addListForUser(uid: number, lid: number) {
     const list = await this.listRepository.findOne({

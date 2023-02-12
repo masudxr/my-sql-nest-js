@@ -1,4 +1,4 @@
-import { Booklist } from 'src/booklist/typeorm/list';
+import { Booklist } from 'src/booklist/entities/list';
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity({ name: 'users' })
@@ -18,10 +18,6 @@ export class User {
   @Column({ nullable: true, default: '' })
   email: string;
 
-  // manny to many relation with list Start
-  @OneToMany(() => Booklist, (booklist) => booklist.user, {
-    cascade: true,
-  })
+  @OneToMany(() => Booklist, (booklist) => booklist.user)
   lists: Booklist[];
-  // manny to many relation with book End
 }

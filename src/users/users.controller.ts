@@ -13,7 +13,7 @@ import {
 // import { AuthenticateGuard } from 'src/auth/utilis/LocalGuard';
 import { CreateUserDto } from 'src/users/dtos/CreateUser.dto';
 import { updateUserDto } from 'src/users/dtos/UpdateUser.dto';
-import { UsersService } from 'src/users/services/users/users.service';
+import { UsersService } from './users.service';
 
 @Controller('users')
 export class UsersController {
@@ -33,7 +33,7 @@ export class UsersController {
     return this.userService.createUser(CreateUserDto);
   }
   @Post(':uid/user2list/:lid')
-  async addListForUser(
+  async addList(
     @Param('uid', ParseIntPipe) uid: number,
     @Param('lid', ParseIntPipe) lid: number,
   ) {
@@ -44,7 +44,7 @@ export class UsersController {
   // ------many to Many----End
 
   @Put(':id')
-  async updateUserById(
+  async updateUser(
     @Param('id', ParseIntPipe) id: number,
     @Body() updateUserDto: updateUserDto,
   ) {
