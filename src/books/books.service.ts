@@ -34,7 +34,7 @@ export class BooksService {
     console.log('Book', book);
     console.log('listid:', id);
     const list = await this.listRepository.findOne({
-      relations: ['books'],
+      relations: ['books'], //---left Join list and books//
       where: {
         id: id,
       },
@@ -48,6 +48,20 @@ export class BooksService {
       console.log('hello undefined');
     }
     await this.listRepository.save(list);
+  }
+  // removed book from list which was created by many to many relation //
+  async deleteFromList(bid: number, lid: number) {
+    const deleteBookFromList = await this.listRepository.findOne({
+      relations: ['books'],
+      where: {
+        id: lid,
+      },
+    });
+    console.log('List with books:', deleteBookFromList.books);
+    deleteBookFromList.books = deleteBookFromList.books.filter((book) => {
+      bid !== book.id;
+    });
+    await this.listRepository.save(deleteBookFromList);
   }
 
   // marge code..connect one to one/many start

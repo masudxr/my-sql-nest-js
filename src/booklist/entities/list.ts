@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Book } from 'src/books/entities/books';
 import { User } from 'src/users/entities/user';
 import {
@@ -22,7 +23,7 @@ export class Booklist {
   })
   userId: number;
 
-  @ManyToMany(() => Book, (book) => book.lists)
+  @ManyToMany(() => Book, (book) => book.lists, { onDelete: 'CASCADE' })
   books: Book[];
 
   @ManyToOne(() => User, (user) => user.lists, { nullable: false })

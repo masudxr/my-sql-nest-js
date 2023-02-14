@@ -53,6 +53,14 @@ export class BooksController {
     return this.BookService.addBookToList(id, lid);
   }
 
+  @Delete('/:bid/list/:lid')
+  async deleteFromList(
+    @Param('bid', ParseIntPipe) bid: number,
+    @Param('lid', ParseIntPipe) lid: number,
+  ) {
+    await this.BookService.deleteFromList(bid, lid);
+  }
+
   @Put(':id')
   async update(
     @Param('id', ParseIntPipe) id: number,
