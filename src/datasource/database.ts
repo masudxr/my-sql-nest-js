@@ -1,7 +1,7 @@
 import 'reflect-metadata';
-import { Auth } from 'src/auth/entities/auth_entity';
-import { User } from 'src/typeorm';
-import { SessionEntity } from 'src/typeorm/session';
+import { Booklist } from 'src/booklist/entities/list';
+import { Book } from 'src/books/entities/books';
+import { User } from 'src/users/entities/user';
 import { DataSource } from 'typeorm';
 
 export const AppDataSource = new DataSource({
@@ -11,7 +11,7 @@ export const AppDataSource = new DataSource({
   username: 'root',
   password: '',
   database: 'fun_db',
-  entities: [User, Auth, SessionEntity],
+  entities: [User, Book, Booklist],
   synchronize: true,
 });
 

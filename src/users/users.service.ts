@@ -20,14 +20,27 @@ export class UsersService {
   }
 
   get(id: number) {
-    // this.bookListService.findList();
     return this.userRepository.findOne({
       where: {
         id: id,
       },
     });
   }
+  findUserByname(username: string) {
+    return this.userRepository.findOne({
+      where: {
+        username: username,
+      },
+    });
+  }
 
+  findUserBymail(email: string) {
+    return this.userRepository.findOne({
+      where: {
+        email: email,
+      },
+    });
+  }
   create(userDetails: CreateUserDto) {
     const password = encodePassword(userDetails.password);
     console.log('New Post Password:', password);
