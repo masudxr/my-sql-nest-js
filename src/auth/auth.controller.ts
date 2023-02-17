@@ -8,7 +8,7 @@ import {
   UseGuards,
 } from '@nestjs/common';
 // import { AuthGuard } from '@nestjs/passport';
-import { LocalAuthGuard } from './local.guard';
+import { LocalAuthGuard } from './local.authguard';
 
 @Controller('auth')
 export class AuthController {
