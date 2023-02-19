@@ -8,11 +8,13 @@ import { Booklist } from './booklist/entities/list';
 import { Book } from './books/entities/books';
 import { User } from './users/entities/user';
 import { ConfigModule } from '@nestjs/config';
+// import configaretion from './config/configaretion';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
+      // load: [configaretion],
     }),
     TypeOrmModule.forRoot({
       type: 'mysql',

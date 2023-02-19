@@ -8,9 +8,7 @@ import {
   ParseIntPipe,
   Post,
   Put,
-  UseGuards,
 } from '@nestjs/common';
-// import { AuthenticateGuard } from 'src/auth/utilis/LocalGuard';
 import { CreateUserDto } from 'src/users/dtos/CreateUser.dto';
 import { UpdateUserDto } from 'src/users/dtos/UpdateUser.dto';
 import { UsersService } from './users.service';
@@ -18,7 +16,6 @@ import { UsersService } from './users.service';
 @Controller('users')
 export class UsersController {
   constructor(private userService: UsersService) {}
-  // @UseGuards(AuthenticateGuard)
   @Get()
   findAll() {
     return this.userService.findAll();

@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+// import { ConfigService } from '@nestjs/config';
 import { InjectRepository } from '@nestjs/typeorm';
 import { BooklistService } from 'src/booklist/booklist.service';
 import { Booklist } from 'src/booklist/entities/list';
@@ -11,11 +12,14 @@ import { User } from './entities/user';
 @Injectable()
 export class UsersService {
   constructor(
+    // private readonly configService: ConfigService,
     @InjectRepository(User) private userRepository: Repository<User>,
     @InjectRepository(Booklist) private listRepository: Repository<Booklist>,
     private bookListService: BooklistService,
   ) {}
   findAll() {
+    // console.log(this.configService.get<string>('host'));
+    // console.log(this.configService.get<string>('a'));
     return this.userRepository.find();
   }
 
