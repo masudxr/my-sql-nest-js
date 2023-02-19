@@ -3,25 +3,28 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
-import { BooksModule } from './books/books.module';
-import { BooklistModule } from './booklist/booklist.module';
 import { AuthModule } from './auth/auth.module';
+import { Booklist } from './booklist/entities/list';
+import { Book } from './books/entities/books';
+import { User } from './users/entities/user';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
     TypeOrmModule.forRoot({
       type: 'mysql',
-      host: 'localhost',
+      host: process.env.host,
       port: 3306,
-      username: 'root',
+      username: process.env.username,
       password: '',
-      database: 'fun_db',
+      database: process.env.database,
+      entities: [User, Book, Booklist],
       synchronize: true,
-      autoLoadEntities: true,
     }),
     UsersModule,
-    BooksModule,
-    BooklistModule,
     AuthModule,
   ],
   controllers: [AppController],
